@@ -5,6 +5,8 @@ function App() {
   const [display, setDisplay] = useState("0");
   const [complete, isComplete] = useState(false);
 
+ 
+
   const handleNumber = (event) => {
     const number = event.target.textContent;
     if (complete === true) {
@@ -14,25 +16,29 @@ function App() {
     } else {
       setDisplay(display + number);
     }
+
+    console.log(display)
   };
 
   const handleOperator = (event) => {
     let operator = event.target.textContent;
-    let lastElement = display.slice(operator.length - 1, operator.length);
-
+    let displayString = display.toString();
+    let lastElement = displayString.slice(operator.length - 1, operator.length);
+    
     if (lastElement && lastElement.match(/[+*/-]/)) {
-      setDisplay(display.slice(0, operator.length - 1) + " " + operator + " ");
+      setDisplay(displayString.slice(0, operator.length - 1) + " " + operator + " ");
     } else {
-      setDisplay(display + " " + operator + " ");
+      setDisplay(displayString + " " + operator + " ");
     }
   };
   const handleAC = () => {
     setDisplay("0");
   };
-  const handleEqual = (event) => {
-    const lastElement = display.slice(display.length - 1, display.length);
-    if (lastElement && lastElement.match(/[+*/-]/)) {
-      setDisplay(eval(display.slice(0, display.length - 1)));
+  const handleEqual = () => {
+    let displayString = display.toString();
+    const lastElement = displayString.slice(displayString.length - 1, displayString.length);
+    if (lastElement && lastElement.match(/[+*/-]/))  {
+      setDisplay(eval(displayString.slice(0, displayString.length - 1)));
       isComplete(true);
     } else {
       setDisplay(eval(display));
